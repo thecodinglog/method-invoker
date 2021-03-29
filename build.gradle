@@ -1,0 +1,60 @@
+import com.github.spotbugs.snom.SpotBugsTask
+
+plugins {
+    id 'checkstyle'
+    id "com.github.spotbugs" version "4.7.0"
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    group = 'io.github.thecodinglog'
+    version = '0.1.0'
+}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    checkstyle {
+        configFile = file("${project.rootDir}/config/checkstyle/checkStyle.xml")
+        configProperties = ["suppressionFile": "${project.rootDir}/config/checkstyle/checkStyle-suppressions.xml"]
+        toolVersion = "8.40"
+        ignoreFailures = false
+        maxErrors = 0
+        maxWarnings = 0
+    }
+
+    spotbugs {
+        ignoreFailures = false
+        reportLevel = "high"
+        spotbugsTest.enabled = false
+    }
+    tasks.withType(SpotBugsTask) {
+        reports {
+            text.enabled = true
+            xml.enabled = false
+            html.enabled = false
+        }
+    }
+
+    tasks.register("printSpotbugsMain") {
+        doLast {
+            File mainResult = file("${buildDir}/reports/spotbugs/main.txt")
+            if (mainResult.exists()) {
+                mainResult.readLines().forEach {
+                    println(it)
+                }
+            }
+        }
+    }
+
+    tasks.getByPath("spotbugsMain").finalizedBy("printSpotbugsMain")
+}

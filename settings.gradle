@@ -1,0 +1,4 @@
+rootProject.name = 'method-invoker'
+include 'core'
+include 'invoker'
+

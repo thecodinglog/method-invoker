@@ -2,7 +2,6 @@ package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.ConstructorQualifier;
 import io.github.thecodinglog.methodinvoker.annotations.DefaultConstructor;
-import io.github.thecodinglog.methodinvoker.annotations.MethodQualifier;
 
 import java.lang.reflect.Constructor;
 

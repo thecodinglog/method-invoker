@@ -1,5 +1,7 @@
 # Method-Invoker
 
+[![CI](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml/badge.svg)](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml)
+
 _Method-Invoker_ is **a tool for invoking methods at runtime** using class names and method modifiers.
 
 The key feature of Method-Invoker is to create an object by selecting the most appropriate class constructor and invoke
@@ -31,6 +33,24 @@ Which constructor and which method to use depends on the data in the context and
 ## Requirements
 
 - JDK 1.8 or higher
+
+## Install
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>io.github.thecodinglog</groupId>
+  <artifactId>method-invoker</artifactId>
+  <version>0.1.1</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+implementation 'io.github.thecodinglog:method-invoker:0.1.1'
+```
 
 ## Selecting constructor strategy
 
@@ -226,5 +246,6 @@ using a type, only the first layer that is the object founded is the boundary fo
 ## TypeDescribableObject
 
 It is a class that explicitly stores an object and its type. Ordinary classes can get the type of the class, but generic
-classes don't have exact type information due to type erasure. So explicitly put the type. `io.github.thecodinglog.methodinvoker.TypeReference`
+classes don't have exact type information due to type erasure. So explicitly put the
+type. `io.github.thecodinglog.methodinvoker.TypeReference`
 is helpful to get type information from Generic class.

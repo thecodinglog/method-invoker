@@ -5,7 +5,6 @@ import io.github.thecodinglog.methodinvoker.exceptions.MethodInvokeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sample.context.FakeContext;
 import sample.order.domain.FakeItemRepository;
 import sample.order.domain.FakeOrderRepository;
 import sample.order.domain.Item;
@@ -28,7 +27,7 @@ public class OrderFulfilment {
     @BeforeEach
     void setting() {
         strictMethodInvoker = new StrictMethodInvoker();
-        context = new FakeContext();
+        context = new SingleLevelContext();
 
         context.add("orderRepo", new TypeDescribableObject(new FakeOrderRepository()));
         context.add("itemRepo", new TypeDescribableObject(new FakeItemRepository()));

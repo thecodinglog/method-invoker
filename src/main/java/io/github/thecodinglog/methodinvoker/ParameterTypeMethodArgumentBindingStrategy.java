@@ -1,5 +1,6 @@
 package io.github.thecodinglog.methodinvoker;
 
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

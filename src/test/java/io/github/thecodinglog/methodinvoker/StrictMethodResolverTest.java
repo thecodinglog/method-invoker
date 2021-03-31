@@ -2,6 +2,7 @@ package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import io.github.thecodinglog.methodinvoker.annotations.MethodQualifier;
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueQualifierException;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Type;

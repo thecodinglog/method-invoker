@@ -1,6 +1,7 @@
 package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.ParameterQualifier;
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;

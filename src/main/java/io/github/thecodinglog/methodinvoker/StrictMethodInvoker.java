@@ -1,5 +1,7 @@
 package io.github.thecodinglog.methodinvoker;
 
+import io.github.thecodinglog.methodinvoker.exceptions.MethodInvokeException;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**

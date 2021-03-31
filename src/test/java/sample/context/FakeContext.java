@@ -1,7 +1,7 @@
 package sample.context;
 
 import io.github.thecodinglog.methodinvoker.Context;
-import io.github.thecodinglog.methodinvoker.NoUniqueElementException;
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueElementException;
 import io.github.thecodinglog.methodinvoker.TypeDescribableObject;
 import org.springframework.core.ResolvableType;
 

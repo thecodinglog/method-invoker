@@ -1,7 +1,7 @@
 package client;
 
 import io.github.thecodinglog.methodinvoker.*;
-import io.github.thecodinglog.methodinvoker.MethodInvokeException;
+import io.github.thecodinglog.methodinvoker.exceptions.MethodInvokeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

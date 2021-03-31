@@ -1,4 +1,4 @@
-package io.github.thecodinglog.methodinvoker;
+package io.github.thecodinglog.methodinvoker.exceptions;
 
 /**
  * The exception is raised when more than one qualifier value exists.

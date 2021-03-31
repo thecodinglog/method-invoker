@@ -1,5 +1,7 @@
 package io.github.thecodinglog.methodinvoker;
 
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueElementException;
+
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.NoSuchElementException;

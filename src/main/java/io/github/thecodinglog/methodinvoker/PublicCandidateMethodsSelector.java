@@ -2,6 +2,7 @@ package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import io.github.thecodinglog.methodinvoker.annotations.MethodQualifier;
+import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueQualifierException;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

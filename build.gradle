@@ -87,11 +87,11 @@ publishing {
 
     publications {
         maven(MavenPublication) {
-            artifactId 'Method-Invoker'
+            artifactId 'method-invoker'
             from components.java
 
             pom {
-                name = "Method-Invoker"
+                name = "method-invoker"
                 description = "Method-Invoker is a tool for invoking methods at runtime using class names and method modifiers."
                 url = "https://github.com/thecodinglog/method-invoker"
 

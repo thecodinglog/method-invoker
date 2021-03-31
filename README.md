@@ -1,7 +1,7 @@
 # Method-Invoker
 
 [![CI](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml/badge.svg)](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml)
-[![Publish](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml/badge.svg)](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml)
+[![Publish](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml/badge.svg?event=workflow_dispatch)](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml)
 
 _Method-Invoker_ is **a tool for invoking methods at runtime** using class names and method modifiers.
 

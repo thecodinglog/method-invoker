@@ -7,6 +7,12 @@ import org.slf4j.LoggerFactory;
 import java.util.NoSuchElementException;
 
 /**
+ * Finds and binds an object in the context by the method parameter type.
+ * <p>
+ * If it cannot be retrieved by the parameter type in the context,
+ * {@link ParameterBindingResult} in which the object is {@code null} is returned to check the next parameter.
+ * When it cannot be found, the processing depends on the implementation using that strategy.
+ *
  * @author Jeongjin Kim
  * @since 2021-03-26
  */
@@ -28,7 +34,7 @@ public class ParameterTypeMethodArgumentBindingStrategy implements MethodArgumen
             parameterAndArgumentHolder.accept(argCandidate);
             log.debug("Type binding of " + parameterAndArgumentHolder.getParameterType());
             return new ParameterBindingResult(parameterAndArgumentHolder, true);
-        }else{
+        } else {
             return new ParameterBindingResult(null, true);
         }
     }

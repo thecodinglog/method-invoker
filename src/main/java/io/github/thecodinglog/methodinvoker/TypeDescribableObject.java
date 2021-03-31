@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 /**
- * It is a class that explicitly stores an object and its type.
+ * Class that explicitly stores an object and its type.
  * <p>
  * Ordinary classes can get the type of the class,
  * but generic classes don't have exact type information due to type erasure.

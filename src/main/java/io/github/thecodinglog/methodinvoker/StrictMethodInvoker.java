@@ -5,10 +5,19 @@ import io.github.thecodinglog.methodinvoker.exceptions.MethodInvokeException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * It is an implementation of MethodInvoker.
+ * <p>
+ * First, a method is searched using
+ * {@link io.github.thecodinglog.methodinvoker.annotations.MethodQualifier},
+ * followed by a method whose parameter name matches the context,
+ * and then the method whose parameter type matches the context.
+ * <p>
+ * All parameters of the method match the context
+ *
  * @author Jeongjin Kim
  * @since 2021-03-25
  */
-public class StrictMethodInvoker implements MethodInvoker {
+public final class StrictMethodInvoker implements MethodInvoker {
     private final MethodArgumentBinder binder = new TypeMatchableMethodArgumentBinder();
     private final PriorityPicker picker = new HighestPriorityPicker();
 

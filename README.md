@@ -3,7 +3,7 @@
 [![CI](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml/badge.svg)](https://github.com/thecodinglog/method-invoker/actions/workflows/ci.yml)
 [![Publish](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml/badge.svg?event=workflow_dispatch)](https://github.com/thecodinglog/method-invoker/actions/workflows/publish.yml)
 
-_Method-Invoker_ is **a tool for invoking methods at runtime** using class names and method modifiers.
+_Method-Invoker_ is **a tool for invoking methods at runtime** using class names and method qualifiers.
 
 The key feature of Method-Invoker is to create an object by selecting the most appropriate class constructor and invoke
 the best matching method in the current context.
@@ -43,14 +43,14 @@ Which constructor and which method to use depends on the data in the context and
 <dependency>
   <groupId>io.github.thecodinglog</groupId>
   <artifactId>method-invoker</artifactId>
-  <version>0.1.2</version>
+  <version>0.1.3</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'io.github.thecodinglog:method-invoker:0.1.2'
+implementation 'io.github.thecodinglog:method-invoker:0.1.3'
 ```
 
 ## Selecting constructor strategy

@@ -55,7 +55,7 @@ public final class StrictMethodInvoker implements MethodInvoker {
             throw new MethodInvokeException(e.getMessage(), e);
         }
 
-        return new TypeDescribableObject(invoke, resolve.method().getReturnType());
+        return new TypeDescribableObject(invoke, resolve.method().getGenericReturnType());
     }
 
     @Override

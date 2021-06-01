@@ -51,8 +51,14 @@ public final class StrictMethodInvoker implements MethodInvoker {
         Object invoke;
         try {
             invoke = resolve.method().invoke(object, resolve.args());
-        } catch (IllegalAccessException | InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
             throw new MethodInvokeException(e.getMessage(), e);
+        } catch (InvocationTargetException e) {
+            if (e.getTargetException() instanceof RuntimeException) {
+                throw (RuntimeException) e.getTargetException();
+            } else {
+                throw new MethodInvokeException(e.getMessage(), e);
+            }
         }
 
         return new TypeDescribableObject(invoke, resolve.method().getGenericReturnType());

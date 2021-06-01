@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * @author Jeongjin Kim
@@ -16,6 +17,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class StrictMethodInvokerTest {
     MethodInvoker methodInvoker = new StrictMethodInvoker();
+
+    @Test
+    void ifExceptionOccursInCalledMethodThenTheExceptionFromMethodShouldPass() {
+        ExceptionTestMethod testClass = new ExceptionTestMethod();
+        assertThatExceptionOfType(MyException.class).isThrownBy(() ->
+                methodInvoker.invoke(testClass, "call", null)
+        ).withMessage("hi");
+    }
 
     @Test
     void givenNoArgsMethodThenShouldInvokeMethod() {
@@ -94,6 +103,18 @@ class StrictMethodInvokerTest {
     static class SimpleMethod {
         public String myName() {
             return "myName";
+        }
+    }
+
+    static class ExceptionTestMethod {
+        public String call() {
+            throw new MyException("hi");
+        }
+    }
+
+    static class MyException extends RuntimeException {
+        public MyException(String message) {
+            super(message);
         }
     }
 }

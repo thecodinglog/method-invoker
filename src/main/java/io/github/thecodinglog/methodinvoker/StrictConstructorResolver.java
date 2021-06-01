@@ -68,7 +68,7 @@ final class StrictConstructorResolver implements ConstructorResolver {
             beforeConstructorParameterLength = constructor.getParameters().length;
         }
         if (candidatesConstructors.size() == 0)
-            throw new ConstructorNotFoundException("No candidate constructors.");
+            throw new ConstructorNotFoundException("No candidate constructors : " + aClass.getName());
 
         Prioritizable pick;
         try {

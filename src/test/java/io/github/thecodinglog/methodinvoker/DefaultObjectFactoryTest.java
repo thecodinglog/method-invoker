@@ -32,7 +32,7 @@ class DefaultObjectFactoryTest {
         Context context = mock(Context.class);
         assertThatExceptionOfType(ConstructorNotFoundException.class).isThrownBy(() ->
                 objectFactory.createObject(fqcn, context)
-        ).withMessage("No public constructor exists.");
+        ).withMessage("No public constructor exists. : io.github.thecodinglog.methodinvoker.DefaultObjectFactoryTest$NoPublicConstructor");
     }
 
     @Test

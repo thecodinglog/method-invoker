@@ -23,7 +23,7 @@ final class PublicOnlyCandidateConstructorsSelector implements CandidateConstruc
             if (declaredConstructors.length == 1 && declaredConstructors[0].getModifiers() == 0)
                 constructors = declaredConstructors;
             else
-                throw new ConstructorNotFoundException("No public constructor exists.");
+                throw new ConstructorNotFoundException("No public constructor exists. : " + clazz.getName());
         }
 
         Constructor<?> defaultConstructor = getDefaultConstructorIfExists(constructors);
@@ -33,7 +33,8 @@ final class PublicOnlyCandidateConstructorsSelector implements CandidateConstruc
         } else {
             Constructor<?> qualifiedConstructor = getQualifiedConstructorIfExists(constructors, qualifier);
             if (qualifiedConstructor == null)
-                throw new ConstructorNotFoundException("No public constructor called " + qualifier + ".");
+                throw new ConstructorNotFoundException(
+                        "No public constructor [" + qualifier + "] of class [" + clazz.getName() + "]");
             else
                 return new Constructor[]{qualifiedConstructor};
         }
@@ -45,7 +46,7 @@ final class PublicOnlyCandidateConstructorsSelector implements CandidateConstruc
             ConstructorQualifier annotation = constructor.getAnnotation(ConstructorQualifier.class);
             if (annotation != null) {
                 if (qualifiedConstructors.containsKey(annotation.value()))
-                    throw new NoUniqueQualifierException(annotation.value() + " is not unique qualifier.");
+                    throw new NoUniqueQualifierException("[" + annotation.value() + "] is not unique qualifier.");
                 qualifiedConstructors.put(annotation.value(), constructor);
             }
         }

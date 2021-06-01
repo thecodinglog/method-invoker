@@ -92,7 +92,7 @@ public class OrderFulfilment {
 
         Assertions.assertThatExceptionOfType(MethodInvokeException.class)
                 .isThrownBy(() -> strictMethodInvoker.invoke(fqcn, "deliveryOrder", context))
-                .withMessage("No suitable method.");
+                .withMessage("No suitable method. : sample.order.domain.OrderManager");
     }
 
     @Test

@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
  * @author Jeongjin Kim
  * @since 2021-03-05
  */
-final class TypeUtils {
+public final class TypeUtils {
     /**
      * Check if the right-hand side type may be assigned to the left-hand side type, assuming setting by reflection.
      * Considers primitive wrapper classes as assignable to the corresponding primitive types.

@@ -19,12 +19,12 @@ final class PublicCandidateMethodsSelector implements CandidateMethodsSelector {
     public Method[] select(Class<?> clazz, String qualifier) {
         Method[] methods = clazz.getMethods();
         if (methods.length == 0)
-            throw new MethodNotFoundException("No public method exists.");
+            throw new MethodNotFoundException("No public method exists. : " + clazz.getName());
 
         Method defaultMethodIfExists = getDefaultMethodIfExists(methods);
 
         if (qualifier == null && defaultMethodIfExists == null)
-            throw new MethodNotFoundException("No default method exists.");
+            throw new MethodNotFoundException("No default method exists. : " + clazz.getName());
 
         if (qualifier == null)
             return new Method[]{defaultMethodIfExists};
@@ -37,7 +37,8 @@ final class PublicCandidateMethodsSelector implements CandidateMethodsSelector {
         Method[] methodsMatchingQualifierAndMethodName = getMethodsMatchingQualifierAndMethodName(methods, qualifier);
 
         if (methodsMatchingQualifierAndMethodName.length == 0)
-            throw new MethodNotFoundException("No public method called " + qualifier + ".");
+            throw new MethodNotFoundException(
+                    "No public method [" + qualifier + "] of class [" + clazz.getName() + "]");
 
         return methodsMatchingQualifierAndMethodName;
     }
@@ -58,7 +59,8 @@ final class PublicCandidateMethodsSelector implements CandidateMethodsSelector {
             MethodQualifier annotation = method.getAnnotation(MethodQualifier.class);
             if (annotation != null) {
                 if (qualifiedMethods.containsKey(annotation.value()))
-                    throw new NoUniqueQualifierException(annotation.value() + " is not unique qualifier.");
+                    throw new NoUniqueQualifierException(
+                            annotation.value() + " is not unique qualifier. : " + method.getName());
                 qualifiedMethods.put(annotation.value(), method);
             }
         }

@@ -28,7 +28,7 @@ class PublicOnlyCandidateConstructorsSelectorTest {
     void givenNoQualifierAndNoPublicConstructorThenThrowsException() {
         assertThatExceptionOfType(ConstructorNotFoundException.class).isThrownBy(
                 () -> resolver.select(NoPublicConstructor.class, null))
-                .withMessage("No public constructor exists.");
+                .withMessage("No public constructor exists. : io.github.thecodinglog.methodinvoker.PublicOnlyCandidateConstructorsSelectorTest$NoPublicConstructor");
     }
 
     @Test
@@ -42,7 +42,7 @@ class PublicOnlyCandidateConstructorsSelectorTest {
     void givenQualifierAndConstructorQualifierAnnotationWithWrongNameThenThrowsException() {
         assertThatExceptionOfType(ConstructorNotFoundException.class).isThrownBy(
                 () -> resolver.select(ConstructorQualifierExists.class, "abc"))
-                .withMessage("No public constructor called abc.");
+                .withMessage("No public constructor [abc] of class [io.github.thecodinglog.methodinvoker.PublicOnlyCandidateConstructorsSelectorTest$ConstructorQualifierExists]");
     }
 
     @Test
@@ -94,7 +94,7 @@ class PublicOnlyCandidateConstructorsSelectorTest {
     void givenSameQualifierAnnotationConstructorThenThrowException() {
         assertThatExceptionOfType(NoUniqueQualifierException.class).isThrownBy(
                 () -> resolver.select(SameQualifierExistsConstructors.class, "abc"))
-                .withMessage("abc is not unique qualifier.");
+                .withMessage("[abc] is not unique qualifier.");
     }
 
     @Test

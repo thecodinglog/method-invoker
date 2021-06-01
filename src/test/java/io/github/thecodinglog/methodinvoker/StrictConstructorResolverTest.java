@@ -30,7 +30,7 @@ class StrictConstructorResolverTest {
     void givenNoPublicConstructorClassThenThrowException() {
         assertThatExceptionOfType(ConstructorNotFoundException.class)
                 .isThrownBy(() -> resolver.resolve(NoPublicConstWithPublicClass.class, null))
-                .withMessage("No public constructor exists.");
+                .withMessage("No public constructor exists. : io.github.thecodinglog.methodinvoker.StrictConstructorResolverTest$NoPublicConstWithPublicClass");
     }
 
     @Test
@@ -42,7 +42,7 @@ class StrictConstructorResolverTest {
         Context mockContext = mock(Context.class);
         assertThatExceptionOfType(ConstructorNotFoundException.class)
                 .isThrownBy(() -> resolver.resolve(OneStringArgOnlyClass.class, mockContext))
-                .withMessage("No candidate constructors.");
+                .withMessage("No candidate constructors : io.github.thecodinglog.methodinvoker.StrictConstructorResolverTest$OneStringArgOnlyClass");
     }
 
     @Test

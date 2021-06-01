@@ -28,7 +28,7 @@ class PublicCandidateMethodsSelectorTest {
     void givenQualifierWithNotExistsMethodNameThenThrowException() {
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.select(MethodOnly.class, "noMethod"))
-                .withMessage("No public method called noMethod.");
+                .withMessage("No public method [noMethod] of class [io.github.thecodinglog.methodinvoker.PublicCandidateMethodsSelectorTest$MethodOnly]");
     }
 
     @Test
@@ -49,7 +49,7 @@ class PublicCandidateMethodsSelectorTest {
     void givenMultiMethodWithoutAnnotationAndNoQualifierThenThrowException() {
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.select(MultiMethodWithoutAnnotation.class, null))
-                .withMessage("No default method exists.");
+                .withMessage("No default method exists. : io.github.thecodinglog.methodinvoker.PublicCandidateMethodsSelectorTest$MultiMethodWithoutAnnotation");
     }
 
     @Test
@@ -63,7 +63,7 @@ class PublicCandidateMethodsSelectorTest {
     void givenMultiMethodWithoutAnnotationAndQualifierOrPrivateMethodThenException() {
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.select(MultiMethodWithoutAnnotation.class, "method3"))
-                .withMessage("No public method called method3.");
+                .withMessage("No public method [method3] of class [io.github.thecodinglog.methodinvoker.PublicCandidateMethodsSelectorTest$MultiMethodWithoutAnnotation]");
     }
 
     @Test
@@ -84,7 +84,7 @@ class PublicCandidateMethodsSelectorTest {
     void givenMultiMethodWithoutAnnotationAndQualifierPrivateMethodThenException() {
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.select(MultiMethodWithDefaultMethodAnnotation.class, "method3"))
-                .withMessage("No public method called method3.");
+                .withMessage("No public method [method3] of class [io.github.thecodinglog.methodinvoker.PublicCandidateMethodsSelectorTest$MultiMethodWithDefaultMethodAnnotation]");
     }
 
     @Test

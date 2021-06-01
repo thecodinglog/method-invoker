@@ -53,7 +53,7 @@ class StrictMethodResolverTest {
         Context mockContext = mock(Context.class);
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.resolve(OrdinaryClass.class, "hi", mockContext))
-                .withMessage("No public method called hi.");
+                .withMessage("No public method [hi] of class [io.github.thecodinglog.methodinvoker.StrictMethodResolverTest$OrdinaryClass]");
     }
 
     @Test
@@ -61,7 +61,7 @@ class StrictMethodResolverTest {
         Context mockContext = mock(Context.class);
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.resolve(OrdinaryClass.class, mockContext))
-                .withMessage("No default method exists.");
+                .withMessage("No default method exists. : io.github.thecodinglog.methodinvoker.StrictMethodResolverTest$OrdinaryClass");
     }
 
     @Test
@@ -71,7 +71,7 @@ class StrictMethodResolverTest {
         given(mockContext.getValueByKey("name")).willReturn(new TypeDescribableObject("ff"));
         assertThatExceptionOfType(MethodNotFoundException.class)
                 .isThrownBy(() -> resolver.resolve(PrivateMethod.class, "sayHello", mockContext))
-                .withMessage("No public method called sayHello.");
+                .withMessage("No public method [sayHello] of class [io.github.thecodinglog.methodinvoker.StrictMethodResolverTest$PrivateMethod]");
     }
 
     @Test
@@ -112,7 +112,7 @@ class StrictMethodResolverTest {
         Context mockContext = mock(Context.class);
         assertThatExceptionOfType(NoUniqueQualifierException.class)
                 .isThrownBy(() -> resolver.resolve(SameQualifiedMethodClass.class, "MyMethod", mockContext))
-                .withMessage("MyMethod is not unique qualifier.");
+                .withMessage("MyMethod is not unique qualifier. : method2");
     }
 
     @Test

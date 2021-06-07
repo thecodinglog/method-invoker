@@ -78,8 +78,8 @@ java {
 }
 
 dependencies {
-    api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
-    api('org.springframework:spring-core:4.3.30.RELEASE')
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation('org.springframework:spring-core:4.3.30.RELEASE')
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation('org.assertj:assertj-core:3.18.1')

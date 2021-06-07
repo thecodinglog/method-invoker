@@ -162,6 +162,45 @@ class StrictMethodResolverTest {
         assertThat(sayHello.args()).hasSize(1);
     }
 
+    @Test
+    void givenJsonStringTryConvertToParameterObject() throws NoSuchMethodException {
+        SingleLevelContext context = new SingleLevelContext();
+        context.add("paramObject", new TypeDescribableObject(new ParamObject("3")));
+        PrioritizableMethodOrConstructorHolder call = resolver.resolve(PojoParamMethodClass.class, "call", context);
+        assertThat(call.method()).isEqualTo(PojoParamMethodClass.class.getMethod("call", ParamObject.class));
+        assertThat(call.args()).hasSize(1);
+
+        context.add("paramObject", new TypeDescribableObject("{\"id\":\"3\"}"));
+        PrioritizableMethodOrConstructorHolder call2 = resolver.resolve(PojoParamMethodClass.class, "call", context);
+        assertThat(call2.method()).isEqualTo(PojoParamMethodClass.class.getMethod("call", ParamObject.class));
+        assertThat(call2.args()).hasSize(1);
+    }
+
+    static class PojoParamMethodClass {
+        public void call(ParamObject paramObject) {
+
+        }
+    }
+
+    static class ParamObject {
+        private String id;
+
+        public ParamObject() {
+        }
+
+        public ParamObject(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+    }
+
     static class WildcardMethod {
         public void method1(List<?> list) {
 

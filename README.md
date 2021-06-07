@@ -43,14 +43,14 @@ Which constructor and which method to use depends on the data in the context and
 <dependency>
   <groupId>io.github.thecodinglog</groupId>
   <artifactId>method-invoker</artifactId>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'io.github.thecodinglog:method-invoker:0.1.3'
+implementation 'io.github.thecodinglog:method-invoker:0.1.4'
 ```
 
 ## Selecting constructor strategy
@@ -200,6 +200,27 @@ parameter type is searched in the context. Select the value only when the compat
 
 If the method parameter type is `int` and the type of the value corresponding to the context is `Integer`, it is treated
 as the **same type**.
+
+### JSON type conversion
+When the parameter type is a plain class and it can get String type JSON data as the parameter name from the context, 
+it tries to convert it to the parameter type.
+
+If you can get a JSON string from the context with the same key as the method's parameter name as shown below,
+```json
+{
+  "id": "3"
+}
+```
+Convert to the class defined as below and execute method.
+
+```java
+class MyClass{
+    private String id;
+    public void setId(String id){
+        this.id = id;
+    }
+}
+```
 
 ### Select the object of the type closest to the parameter type
 

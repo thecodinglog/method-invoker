@@ -28,11 +28,11 @@ public class ParameterTypeMethodArgumentBindingStrategy implements MethodArgumen
                 argCandidate = context.getOneValueByType(parameterAndArgumentHolder.getParameterType());
             } catch (NoUniqueElementException | NoSuchElementException e) {
                 // 파라미터가 2개 중 하나는 Key 로 바인드되고, 나머지는 타입으로 바인드 시도했는데 2개 이상이거나 없으면 다음 생성자를 시도함
-                log.debug(String.format("[%s] is skipped.", parameterAndArgumentHolder.getParameterType()));
+                log.debug("{} is skipped.", parameterAndArgumentHolder.getParameterType());
                 return new ParameterBindingResult(null, false);
             }
             parameterAndArgumentHolder.accept(argCandidate);
-            log.debug("Type binding of " + parameterAndArgumentHolder.getParameterType());
+            log.debug("Type binding of {}", parameterAndArgumentHolder.getParameterType());
             return new ParameterBindingResult(parameterAndArgumentHolder, true);
         } else {
             return new ParameterBindingResult(null, true);

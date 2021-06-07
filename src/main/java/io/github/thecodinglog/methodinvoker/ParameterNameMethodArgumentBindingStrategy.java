@@ -28,7 +28,7 @@ public class ParameterNameMethodArgumentBindingStrategy implements MethodArgumen
                     context.getValueByKey(parameterAndArgumentHolder.getParameterName());
             if (parameterAndArgumentHolder.canAccept(argCandidate.getType())) {
                 parameterAndArgumentHolder.accept(argCandidate);
-                log.debug("Parameter name binding of " + parameterAndArgumentHolder.getParameterName());
+                log.debug("Parameter name binding of {}", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
             }
         }

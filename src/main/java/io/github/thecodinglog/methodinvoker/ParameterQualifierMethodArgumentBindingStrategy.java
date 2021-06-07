@@ -39,7 +39,7 @@ public class ParameterQualifierMethodArgumentBindingStrategy implements MethodAr
                     throw new ClassCastException(
                             String.format("Annotated parameter [%s] is not a instance of [%s]"
                                     , contextKey, parameterAndArgumentHolder.getParameterType()));
-                log.debug("Annotation binding of " + contextKey);
+                log.debug("Annotation binding of {}", contextKey);
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
             } else {
                 return new ParameterBindingResult(null, false);

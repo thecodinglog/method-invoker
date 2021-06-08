@@ -5,7 +5,7 @@ plugins {
     id "com.github.spotbugs" version "4.7.0"
     id 'checkstyle'
     id 'maven-publish'
-    id 'maven'
+//    id 'maven'
     id 'signing'
 }
 

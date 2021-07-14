@@ -49,13 +49,15 @@ final class StrictMethodResolver implements MethodResolver {
             beforeConstructorParameterLength = method.getParameters().length;
         }
         if (candidatesMethods.size() == 0)
-            throw new MethodNotFoundException("No suitable method. : " + aClass.getName());
+            throw new MethodNotFoundException(
+                    String.format("No suitable method. : Class[%s], Method[%s]", aClass.getName(), methodName));
 
         Prioritizable pick;
         try {
             pick = priorityPicker.pick(candidatesMethods);
         } catch (PriorityPickingException e) {
-            throw new MethodNotFoundException("PriorityPicker exception : " + aClass.getName(), e);
+            throw new MethodNotFoundException(
+                    String.format("PriorityPicker exception : %s", aClass.getName()), e);
         }
         return (PrioritizableMethodOrConstructorHolder) pick;
     }

@@ -1,6 +1,7 @@
 package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
+import io.github.thecodinglog.methodinvoker.exceptions.MethodInvokeException;
 
 /**
  * Interface to invoke the object's method.
@@ -22,6 +23,7 @@ public interface MethodInvoker {
      * @param methodName the method name to invoke, optional
      * @param context    The context referenced to invoke method
      * @return the result of dispatching the method represented by this object on obj with parameters args
+     * @throws MethodInvokeException thrown when failed to invoke the method
      */
     TypeDescribableObject invoke(Object object, String methodName, Context context);
 
@@ -33,6 +35,7 @@ public interface MethodInvoker {
      * @param methodName the method name to invoke, optional
      * @param context    The context referenced to invoke method
      * @return the result of dispatching the method represented by this object on obj with parameters args
+     * @exception MethodInvokeException thrown when failed to invoke the method
      */
     TypeDescribableObject invoke(Class<?> clazz, String methodName, Context context);
 
@@ -44,6 +47,7 @@ public interface MethodInvoker {
      * @param methodName             the method name to invoke, optional
      * @param context                The context referenced to invoke method
      * @return the result of dispatching the method represented by this object on obj with parameters args
+     * @exception MethodInvokeException thrown when failed to invoke the method
      */
     TypeDescribableObject invoke(String fullQualifiedClassName, String methodName, Context context);
 }

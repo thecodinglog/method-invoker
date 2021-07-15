@@ -112,7 +112,7 @@ class StrictMethodResolverTest {
         Context mockContext = mock(Context.class);
         assertThatExceptionOfType(NoUniqueQualifierException.class)
                 .isThrownBy(() -> resolver.resolve(SameQualifiedMethodClass.class, "MyMethod", mockContext))
-                .withMessage("MyMethod is not unique qualifier. : method2");
+                .withMessage("MyMethod is not unique qualifier.");
     }
 
     @Test

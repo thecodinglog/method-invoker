@@ -4,11 +4,10 @@ import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import io.github.thecodinglog.methodinvoker.annotations.MethodQualifier;
 import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueQualifierException;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Jeongjin Kim
@@ -56,15 +55,70 @@ final class PublicCandidateMethodsSelector implements CandidateMethodsSelector {
     private Method getQualifiedMethodIfExists(Method[] methods, String qualifier) {
         Map<String, Method> qualifiedMethods = new HashMap<>(methods.length);
         for (Method method : methods) {
-            MethodQualifier annotation = method.getAnnotation(MethodQualifier.class);
-            if (annotation != null) {
-                if (qualifiedMethods.containsKey(annotation.value()))
+            String annotationAndGetValue = (String) findAnnotationAndGetValue(method, MethodQualifier.class);
+            if (annotationAndGetValue != null) {
+                if (qualifiedMethods.containsKey(annotationAndGetValue))
                     throw new NoUniqueQualifierException(
-                            annotation.value() + " is not unique qualifier. : " + method.getName());
-                qualifiedMethods.put(annotation.value(), method);
+                            annotationAndGetValue + " is not unique qualifier.");
+                qualifiedMethods.put(annotationAndGetValue, method);
             }
         }
         return qualifiedMethods.get(qualifier);
+    }
+
+    private Object findAnnotationAndGetValue(Method method, Class<? extends Annotation> annotationType) {
+        Annotation[] declaredAnnotations = method.getDeclaredAnnotations();
+        Set<Class<? extends Annotation>> failedSet = new HashSet<>();
+
+        for (Annotation declaredAnnotation : declaredAnnotations) {
+            Method valueMethod;
+            try {
+                valueMethod = declaredAnnotation.annotationType().getMethod("value");
+            } catch (NoSuchMethodException e) {
+                failedSet.add(declaredAnnotation.annotationType());
+                continue;
+            }
+            Object value;
+            try {
+                value = valueMethod.invoke(declaredAnnotation);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                failedSet.add(declaredAnnotation.annotationType());
+                continue;
+            }
+            if (!(value instanceof String)) {
+                failedSet.add(declaredAnnotation.annotationType());
+                continue;
+            }
+
+            if (declaredAnnotation.annotationType() == annotationType)
+                return value;
+            else {
+                boolean b = hasAnnotation(declaredAnnotation, annotationType, failedSet);
+                if (b)
+                    return value;
+            }
+        }
+        return null;
+    }
+
+    private boolean hasAnnotation(Annotation annotation,
+                                  Class<?> annotationType,
+                                  Set<Class<? extends Annotation>> failedSet) {
+        Annotation[] declaredAnnotations = annotation.annotationType().getDeclaredAnnotations();
+
+        for (Annotation declaredAnnotation : declaredAnnotations) {
+            if (failedSet.contains(declaredAnnotation.annotationType()))
+                continue;
+            if (failedSet.contains(declaredAnnotation.annotationType()))
+                continue;
+            if (declaredAnnotation.annotationType() == annotationType)
+                return true;
+            failedSet.add(declaredAnnotation.annotationType());
+            boolean b = hasAnnotation(declaredAnnotation, annotationType, failedSet);
+            if (b)
+                return true;
+        }
+        return false;
     }
 
     private Method getDefaultMethodIfExists(Method[] methods) {

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @author Jeongjin Kim
  * @since 2021-03-09
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
@@ -18,5 +18,5 @@ public @interface MethodQualifier {
      * Method qualifier. Usually method name.
      * @return the value of the method qualifier
      */
-    String value();
+    String value() default "";
 }

@@ -5,6 +5,7 @@ import io.github.thecodinglog.methodinvoker.annotations.MethodQualifier;
 import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueQualifierException;
 import org.junit.jupiter.api.Test;
 
+import java.lang.annotation.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +125,13 @@ class StrictMethodResolverTest {
     }
 
     @Test
+    void givenNestedMethodQualifierThenWorkWell() throws NoSuchMethodException {
+        Context mockContext = mock(Context.class);
+        PrioritizableMethodOrConstructorHolder myMethod = resolver.resolve(NestedQualifier.class, "MyMethod", mockContext);
+        assertThat(myMethod.method()).isEqualTo(NestedQualifier.class.getMethod("method1"));
+    }
+
+    @Test
     void givenComplicateObjectParameterExistsAndTheObjectExistsInContextThenReturnTheMethodHavingComplicateClassParameter() throws NoSuchMethodException {
         Context mockContext = mock(Context.class);
         given(mockContext.hasKey("name")).willReturn(true);
@@ -198,6 +206,22 @@ class StrictMethodResolverTest {
 
         public void setId(String id) {
             this.id = id;
+        }
+    }
+
+    @Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Inherited
+    @Documented
+    @MethodQualifier
+    @interface Qualifier{
+        String value();
+    }
+
+    static class NestedQualifier{
+        @Qualifier("MyMethod")
+        public void method1(){
+
         }
     }
 

@@ -34,6 +34,13 @@ public final class StrictMethodInvoker implements MethodInvoker {
             )
     );
 
+    /**
+     * @return objectFactory
+     */
+    public ObjectFactory objectFactory() {
+        return this.objectFactory;
+    }
+
     @Override
     public TypeDescribableObject invoke(Object object, String methodName, Context context) {
         PrioritizableMethodOrConstructorHolder resolve;

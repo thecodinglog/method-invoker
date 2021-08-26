@@ -4,7 +4,7 @@ package io.github.thecodinglog.methodinvoker;
  * @author Jeongjin Kim
  * @since 2021-02-19
  */
-interface ObjectFactory {
+public interface ObjectFactory {
     /**
      * Returns the new object of the specified class.
      *

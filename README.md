@@ -43,14 +43,14 @@ Which constructor and which method to use depends on the data in the context and
 <dependency>
   <groupId>io.github.thecodinglog</groupId>
   <artifactId>method-invoker</artifactId>
-  <version>0.1.4</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-implementation 'io.github.thecodinglog:method-invoker:0.1.4'
+implementation 'io.github.thecodinglog:method-invoker:0.2.0'
 ```
 
 ## Selecting constructor strategy

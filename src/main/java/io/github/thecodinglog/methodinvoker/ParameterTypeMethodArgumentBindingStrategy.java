@@ -21,13 +21,14 @@ public class ParameterTypeMethodArgumentBindingStrategy implements MethodArgumen
 
     @Override
     public ParameterBindingResult tryBind(ParameterAndArgumentHolder parameterAndArgumentHolder, Context context) {
-        // 타입으로 확인
+        // check by type
         if (context.hasType(parameterAndArgumentHolder.getParameterType())) {
             TypeDescribableObject argCandidate;
             try {
                 argCandidate = context.getOneValueByType(parameterAndArgumentHolder.getParameterType());
             } catch (NoUniqueElementException | NoSuchElementException e) {
-                // 파라미터가 2개 중 하나는 Key 로 바인드되고, 나머지는 타입으로 바인드 시도했는데 2개 이상이거나 없으면 다음 생성자를 시도함
+                // If there are two parameters, one of them is bound as a Key and the others are bound by a type,
+                // but the next constructor is tried if there are more or no more than two parameters.
                 log.debug("{} is skipped.", parameterAndArgumentHolder.getParameterType());
                 return new ParameterBindingResult(null, false);
             }

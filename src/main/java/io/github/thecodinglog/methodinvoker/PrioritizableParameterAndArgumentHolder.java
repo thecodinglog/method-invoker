@@ -131,13 +131,14 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
      * @param type to test
      * @return true if the argument is type of the parameter type
      */
-    //todo 의존성 제거
+    //todo Remove Dependencies
     @Override
     public boolean canAccept(Type type) {
         if (this.resolvableType == null)
             this.resolvableType = ResolvableType.forMethodParameter(methodOrConstructorParameter.getMethodParameter());
 
-        //todo 숫자인 경우 int -> long, float or double 변환 등 가능하면 변환 시도 기능 추가, NumberUtils
+        //todo In case of number, int -> long, float or double conversion, etc.,
+        // if possible, conversion attempt function added, NumberUtils
         return TypeUtils.isAssignable(resolvableType, type);
     }
 

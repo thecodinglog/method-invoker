@@ -32,7 +32,7 @@ final class StrictConstructorResolver implements ConstructorResolver {
 
     @Override
     public PrioritizableMethodOrConstructorHolder resolve(Class<?> aClass, Context context) {
-        // 생성자 선택
+        // Constructor selection
         Constructor<?>[] constructors;
         try {
             constructors = candidateResolver.select(aClass, null);
@@ -42,17 +42,15 @@ final class StrictConstructorResolver implements ConstructorResolver {
             throw e;
         }
 
-        // 생성자에 파라미터가 많음->적음 순으로 정렬
+        // Sort by number of parameter length. many -> few
         Arrays.sort(constructors, (e1, e2) -> Integer.compare(e2.getParameterCount(), e1.getParameterCount()));
 
-        // 이전에 확인했던 생성자의 파라미터 길이
+        // The parameter length of the constructor that we checked before
         int beforeConstructorParameterLength = Integer.MAX_VALUE;
 
         List<PrioritizableMethodOrConstructorHolder> candidatesConstructors = new ArrayList<>(constructors.length);
 
         for (Constructor<?> constructor : constructors) {
-            // 파라미터 길이가 다른데 후보 생성자 개수가 0보다 크면 후보 생성자에서 다시 선택해야함.
-            // 더 짧은 파라미터를 가진 생성자는 확인할 필요 없음
             if (beforeConstructorParameterLength > constructor.getParameters().length
                     && candidatesConstructors.size() > 0)
                 break;

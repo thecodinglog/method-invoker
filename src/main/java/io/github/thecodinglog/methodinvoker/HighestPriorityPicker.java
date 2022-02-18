@@ -23,8 +23,8 @@ final class HighestPriorityPicker implements PriorityPicker {
         if (object.size() == 1)
             return object.get(0);
 
-        // 후보들 중에서 최선을 선택해야 함
-        // 우선순위가 가장 높은 것(0)에서 낮은 순(Integer.MAX_VALUE)으로 정렬
+        // choose the best among the candidates
+        // Sort from highest priority (0) to lowest priority (Integer.MAX_VALUE)
         object.sort((o1, o2) -> {
             if (o1.priority() < o1.priority())
                 return 1;

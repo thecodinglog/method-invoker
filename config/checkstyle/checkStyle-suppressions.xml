@@ -3,6 +3,6 @@
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
     <!-- global -->
-    <suppress files=".*src/test/.*\.java"
+    <suppress files=".*src[/\\]test[/\\].*\.java"
               checks="JavadocPackage|FileLength|MissingJavadocMethod|LineLength"/>
 </suppressions>

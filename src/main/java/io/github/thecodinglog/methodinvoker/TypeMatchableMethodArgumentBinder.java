@@ -28,7 +28,6 @@ final class TypeMatchableMethodArgumentBinder implements MethodArgumentBinder {
             ParameterAndArgumentHolder parameterAndArgumentHolder =
                     new PrioritizableParameterAndArgumentHolder(methodParameter);
 
-            // ParameterQualifier 에 명시된 키 값으로 확인
             List<MethodArgumentBindingStrategy> parameterQualifierBindingStrategies =
                     new ArrayList<>();
             parameterQualifierBindingStrategies.add(
@@ -52,11 +51,12 @@ final class TypeMatchableMethodArgumentBinder implements MethodArgumentBinder {
                         break params;
                 }
             }
-            // 여기까지 오면 파라미터 하나를 바인드 못 한 것이기 떄문에 다음 파라미터를 시도할 필요가 없음
+            // If getting here, you do not need to try the next parameter because one parameter could not be bound.
             break;
         }
 
-        // 매핑이 확인된 인자수와 파라미터 수가 같아야 해당 컨스트럭터를 인정함
+        // When the number of arguments for which mapping was confirmed and the number of parameters ara same
+        // then the constructor Approved.
         if (parameterAndArgumentHolders.size() == methodOrConstructor.parameterCount()) {
             return new PrioritizableMethodOrConstructorHolder(methodOrConstructor, parameterAndArgumentHolders);
         } else {

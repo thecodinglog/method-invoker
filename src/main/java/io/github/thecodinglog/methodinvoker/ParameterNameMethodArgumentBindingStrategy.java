@@ -22,7 +22,7 @@ public class ParameterNameMethodArgumentBindingStrategy implements MethodArgumen
 
     @Override
     public ParameterBindingResult tryBind(ParameterAndArgumentHolder parameterAndArgumentHolder, Context context) {
-        // 파라미터 이름으로 확인
+        // check by parameter name
         if (context.hasKey(parameterAndArgumentHolder.getParameterName())) {
             TypeDescribableObject argCandidate =
                     context.getValueByKey(parameterAndArgumentHolder.getParameterName());

@@ -69,6 +69,12 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
             priority = evaluatePriority(this.methodOrConstructorParameter.getGenericParameterType()
                     , actualArgument.getType());
 
+        } else if (actualArgument.getObject() != null && canAccept(actualArgument.getObject().getClass())) {
+            this.actualArgument = actualArgument.getObject();
+            this.isResolved = true;
+
+            priority = evaluatePriority(this.methodOrConstructorParameter.getGenericParameterType()
+                    , actualArgument.getType());
         } else
             throw new IllegalArgumentException(
                     String.format("actualArgument is not type of the parameter type [%s]"

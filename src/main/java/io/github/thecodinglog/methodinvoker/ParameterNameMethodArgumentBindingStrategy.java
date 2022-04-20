@@ -30,6 +30,10 @@ public class ParameterNameMethodArgumentBindingStrategy implements MethodArgumen
                 parameterAndArgumentHolder.accept(argCandidate);
                 log.debug("Parameter name binding of {}", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
+            } else if (parameterAndArgumentHolder.canAccept(argCandidate.getObject().getClass())) {
+                parameterAndArgumentHolder.accept(argCandidate);
+                log.debug("Parameter name binding of {}", parameterAndArgumentHolder.getParameterName());
+                return new ParameterBindingResult(parameterAndArgumentHolder, false);
             }
         }
         return new ParameterBindingResult(null, true);

@@ -57,6 +57,7 @@ public final class StrictMethodInvoker implements MethodInvoker {
 
         Object invoke;
         try {
+            resolve.method().setAccessible(true);
             invoke = resolve.method().invoke(object, resolve.args());
         } catch (IllegalAccessException e) {
             throw new MethodInvokeException(e.getMessage(), e);
@@ -66,6 +67,8 @@ public final class StrictMethodInvoker implements MethodInvoker {
             } else {
                 throw new MethodInvokeException(e.getMessage(), e);
             }
+        } finally {
+            resolve.method().setAccessible(false);
         }
 
         return new TypeDescribableObject(invoke, resolve.method().getGenericReturnType());

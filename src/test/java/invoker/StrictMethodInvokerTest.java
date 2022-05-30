@@ -1,5 +1,9 @@
-package io.github.thecodinglog.methodinvoker;
+package invoker;
 
+import io.github.thecodinglog.methodinvoker.MethodInvoker;
+import io.github.thecodinglog.methodinvoker.StrictMethodInvoker;
+import io.github.thecodinglog.methodinvoker.TypeDescribableObject;
+import io.github.thecodinglog.methodinvoker.TypeReference;
 import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import org.junit.jupiter.api.Test;
 

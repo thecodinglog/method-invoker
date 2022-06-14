@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
  * @since 2021-03-25
  */
 public final class StrictMethodInvoker implements MethodInvoker {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StrictMethodInvoker.class);
     private final MethodArgumentBinder binder = new TypeMatchableMethodArgumentBinder();
     private final PriorityPicker picker = new HighestPriorityPicker();
 
@@ -54,6 +55,8 @@ public final class StrictMethodInvoker implements MethodInvoker {
         } catch (MethodNotFoundException e) {
             throw new MethodInvokeException(e.getMessage(), e);
         }
+
+        log.debug("Method [{}] selected.",resolve.method().toGenericString());
 
         Object invoke;
         try {

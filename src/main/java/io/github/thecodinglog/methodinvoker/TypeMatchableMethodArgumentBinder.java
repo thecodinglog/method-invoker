@@ -47,10 +47,14 @@ final class TypeMatchableMethodArgumentBinder implements MethodArgumentBinder {
                     parameterAndArgumentHolders.add(parameterBindingResult.getParameterAndArgumentHolder());
                     continue params;
                 } else {
-                    if (!parameterBindingResult.isOptional())
+                    if (!parameterBindingResult.isOptional()) {
                         break params;
+                    }
                 }
             }
+            log.debug("Can't bind parameter [{}][{}]",
+                    methodParameter.getParameterName(),
+                    methodParameter.getParameterType());
             // If getting here, you do not need to try the next parameter because one parameter could not be bound.
             break;
         }

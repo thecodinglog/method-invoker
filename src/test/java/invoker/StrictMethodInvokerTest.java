@@ -1,14 +1,12 @@
 package invoker;
 
-import io.github.thecodinglog.methodinvoker.MethodInvoker;
-import io.github.thecodinglog.methodinvoker.StrictMethodInvoker;
-import io.github.thecodinglog.methodinvoker.TypeDescribableObject;
-import io.github.thecodinglog.methodinvoker.TypeReference;
+import io.github.thecodinglog.methodinvoker.*;
 import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +75,35 @@ class StrictMethodInvokerTest {
         assertThat(parameterizedTypeReturn.getType()).isInstanceOf(Class.class);
     }
 
+    @Test
+    void givenGenericParametersThenInvokeTheMethod() {
+        ParameterMethod parameterMethodInstance = new ParameterMethod();
+        Context context = new SingleLevelContext();
+        context.add("name", new TypeDescribableObject("hi"));
+        context.add("addresses", new TypeDescribableObject(
+                Arrays.asList("Seoul", "Busan"), new TypeReference<List<String>>() {
+        }
+        ));
+
+        TypeDescribableObject parameterizedTypeReturn =
+                methodInvoker.invoke(parameterMethodInstance, "myName", context);
+        assertThat(parameterizedTypeReturn.getObject()).isEqualTo("myName");
+    }
+
+    @Test
+    void givenNoMatchedMethods() {
+        ParameterMethod parameterMethodInstance = new ParameterMethod();
+        Context context = new SingleLevelContext();
+        context.add("addresses", new TypeDescribableObject(
+                Arrays.asList("Seoul", "Busan"), new TypeReference<List<String>>() {
+        }
+        ));
+
+        TypeDescribableObject parameterizedTypeReturn =
+                methodInvoker.invoke(parameterMethodInstance, "myName", context);
+        assertThat(parameterizedTypeReturn.getObject()).isEqualTo("myName");
+    }
+
     static class ParameterizedTypeClass {
         public List<Map<String, Object>> parameterizedTypeReturn() {
             return new ArrayList<>();
@@ -119,6 +146,20 @@ class StrictMethodInvokerTest {
     static class MyException extends RuntimeException {
         public MyException(String message) {
             super(message);
+        }
+    }
+
+    static class ParameterMethod {
+        public String myName(String school, String name, List<String> addresses) {
+            return "myName";
+        }
+
+        public String myName(String name, List<String> addresses) {
+            return "myName";
+        }
+
+        public String myName(List<String> addresses) {
+            return "myName";
         }
     }
 }

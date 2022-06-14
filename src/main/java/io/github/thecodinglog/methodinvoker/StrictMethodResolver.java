@@ -12,6 +12,7 @@ import java.util.List;
  * @since 2021-03-10
  */
 final class StrictMethodResolver implements MethodResolver {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StrictMethodResolver.class);
     private final CandidateMethodsSelector candidateMethodsSelector;
     private final MethodArgumentBinder methodArgumentBinder;
     private final PriorityPicker priorityPicker;
@@ -38,6 +39,8 @@ final class StrictMethodResolver implements MethodResolver {
         for (Method method : methods) {
             if (beforeConstructorParameterLength > method.getParameters().length && candidatesMethods.size() > 0)
                 break;
+
+            log.debug("Try bind [{}]", method.toGenericString());
             PrioritizableMethodOrConstructorHolder holder =
                     methodArgumentBinder.bind(new MethodOrConstructor(method), context);
             if (holder != null)

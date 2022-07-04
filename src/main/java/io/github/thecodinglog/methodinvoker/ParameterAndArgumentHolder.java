@@ -50,6 +50,16 @@ interface ParameterAndArgumentHolder extends Prioritizable {
     boolean canAccept(Type type);
 
     /**
+     * Return true if the parameter can accept the argument.
+     * <p>
+     * If object is {@code null}, then return {@code true}.
+     *
+     * @param object to test
+     * @return true if the argument is type of the parameter type
+     */
+    boolean canAccept(Object object);
+
+    /**
      * @return type of the parameter
      */
     Type getParameterType();

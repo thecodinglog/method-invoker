@@ -5,10 +5,7 @@ import io.github.thecodinglog.methodinvoker.annotations.DefaultMethod;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -102,6 +99,48 @@ class StrictMethodInvokerTest {
         TypeDescribableObject parameterizedTypeReturn =
                 methodInvoker.invoke(parameterMethodInstance, "myName", context);
         assertThat(parameterizedTypeReturn.getObject()).isEqualTo("myName");
+    }
+
+    @Test
+    void givenObjectListThenMatchParameterByActualObjectType() {
+        Consumer consumer = new Consumer();
+        Context context = new SingleLevelContext();
+        context.add("dto", new TypeDescribableObject(
+                Collections.singletonList(new ConsumerDto("1")), new TypeReference<List<Object>>() {
+        }
+        ));
+        TypeDescribableObject run = methodInvoker.invoke(consumer, "run", context);
+        assertThat(run.getObject()).isEqualTo("run");
+    }
+
+    @Test
+    void givenObjectEmptyListThenMatchParameterByActualObjectType() {
+        Consumer consumer = new Consumer();
+        Context context = new SingleLevelContext();
+        context.add("dto", new TypeDescribableObject(
+                Collections.emptyList(), new TypeReference<List<Object>>() {
+        }
+        ));
+        TypeDescribableObject run = methodInvoker.invoke(consumer, "run", context);
+        assertThat(run.getObject()).isEqualTo("run");
+    }
+
+    static class Consumer {
+        public String run(List<ConsumerDto> dto) {
+            return "run";
+        }
+    }
+
+    static class ConsumerDto {
+        private final String id;
+
+        public ConsumerDto(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
     }
 
     static class ParameterizedTypeClass {

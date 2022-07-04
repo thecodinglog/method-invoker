@@ -4,7 +4,9 @@ import org.springframework.core.ResolvableType;
 import org.springframework.util.ClassUtils;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Holder class to save the parameter and argument.
@@ -70,6 +72,12 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
                     , actualArgument.getType());
 
         } else if (actualArgument.getObject() != null && canAccept(actualArgument.getObject().getClass())) {
+            this.actualArgument = actualArgument.getObject();
+            this.isResolved = true;
+
+            priority = evaluatePriority(this.methodOrConstructorParameter.getGenericParameterType()
+                    , actualArgument.getType());
+        } else if (actualArgument.getObject() != null && canAccept(actualArgument.getObject())) {
             this.actualArgument = actualArgument.getObject();
             this.isResolved = true;
 
@@ -146,6 +154,35 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
         //todo In case of number, int -> long, float or double conversion, etc.,
         // if possible, conversion attempt function added, NumberUtils
         return TypeUtils.isAssignable(resolvableType, type);
+    }
+
+    /**
+     * Return true if the parameter can accept the argument.
+     * <p>
+     * If object is {@code null} or empty Collection, then return {@code true}.
+     *
+     * @param object to test
+     * @return true if the argument is type of the parameter type
+     */
+    @Override
+    public boolean canAccept(Object object) {
+        boolean isMethodParameterList
+                = TypeUtils.isAssignable(List.class,
+                methodOrConstructorParameter.getMethodParameter().getGenericParameterType());
+        if (!isMethodParameterList)
+            return false;
+
+        Type actualTypeArgument = ((ParameterizedType) methodOrConstructorParameter.getMethodParameter()
+                .getGenericParameterType()).getActualTypeArguments()[0];
+
+        if(!(object instanceof List))
+            return false;
+
+        List<?> objectList = (List<?>) object;
+        if(objectList.size() == 0)
+            return true;
+
+        return TypeUtils.isAssignable(actualTypeArgument, objectList.get(0).getClass());
     }
 
     /**

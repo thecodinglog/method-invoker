@@ -29,13 +29,16 @@ public class ParameterTypeMethodArgumentBindingStrategy implements MethodArgumen
             } catch (NoUniqueElementException | NoSuchElementException e) {
                 // If there are two parameters, one of them is bound as a Key and the others are bound by a type,
                 // but the next constructor is tried if there are more or no more than two parameters.
-                log.debug("{} is skipped.", parameterAndArgumentHolder.getParameterType());
+                log.debug("[{}] is skipped. No unique parameter set.", parameterAndArgumentHolder.getParameterType());
                 return new ParameterBindingResult(null, false);
             }
             parameterAndArgumentHolder.accept(argCandidate);
-            log.debug("Type binding of {}", parameterAndArgumentHolder.getParameterType());
+            log.debug("Parameter [{}] has bound by type [{}].",
+                    parameterAndArgumentHolder.getParameterName(),
+                    parameterAndArgumentHolder.getParameterType());
             return new ParameterBindingResult(parameterAndArgumentHolder, true);
         } else {
+            log.debug("No parameter type [{}] in the context.", parameterAndArgumentHolder.getParameterType());
             return new ParameterBindingResult(null, true);
         }
     }

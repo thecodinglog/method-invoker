@@ -30,11 +30,13 @@ public class ParameterNameMethodArgumentBindingStrategy implements MethodArgumen
                 parameterAndArgumentHolder.accept(argCandidate);
                 log.debug("Parameter [{}] has bound by name.", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
-            } else if (parameterAndArgumentHolder.canAccept(argCandidate.getObject().getClass())) {
+            } else if (argCandidate.getObject() != null &&
+                    parameterAndArgumentHolder.canAccept(argCandidate.getObject().getClass())) {
                 parameterAndArgumentHolder.accept(argCandidate);
                 log.debug("Parameter [{}] has bound by name.", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
-            } else if (parameterAndArgumentHolder.canAccept(argCandidate.getObject())) {
+            } else if (argCandidate.getObject() != null &&
+                    parameterAndArgumentHolder.canAccept(argCandidate.getObject())) {
                 parameterAndArgumentHolder.accept(argCandidate);
                 log.debug("Parameter [{}] has bound by name.", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);

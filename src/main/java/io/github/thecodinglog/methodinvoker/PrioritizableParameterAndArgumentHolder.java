@@ -7,6 +7,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Holder class to save the parameter and argument.
@@ -166,20 +167,28 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
      */
     @Override
     public boolean canAccept(Object object) {
-        boolean isMethodParameterList
-                = TypeUtils.isAssignable(List.class,
-                methodOrConstructorParameter.getMethodParameter().getGenericParameterType());
-        if (!isMethodParameterList)
+        if (TypeUtils.isAssignable(List.class,
+                methodOrConstructorParameter.getMethodParameter().getGenericParameterType()))
+            return checkIfList(object);
+        else if (TypeUtils.isAssignable(Map.class,
+                methodOrConstructorParameter.getMethodParameter().getGenericParameterType()))
+            // Not support Map bind yet.
             return false;
+        else {
+            return TypeUtils.isAssignable(methodOrConstructorParameter.getMethodParameter().getParameterType(),
+                    object.getClass());
+        }
+    }
 
+    private boolean checkIfList(Object object) {
         Type actualTypeArgument = ((ParameterizedType) methodOrConstructorParameter.getMethodParameter()
                 .getGenericParameterType()).getActualTypeArguments()[0];
 
-        if(!(object instanceof List))
+        if (!(object instanceof List))
             return false;
 
         List<?> objectList = (List<?>) object;
-        if(objectList.size() == 0)
+        if (objectList.size() == 0)
             return true;
 
         return TypeUtils.isAssignable(actualTypeArgument, objectList.get(0).getClass());

@@ -1,9 +1,11 @@
 package io.github.thecodinglog.methodinvoker;
 
 import io.github.thecodinglog.methodinvoker.annotations.ParameterQualifier;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -83,6 +85,55 @@ class TypeMatchableMethodArgumentBinderTest {
                 break;
         }
         assertThat(bind.method().getParameterCount()).isEqualTo(1);
+    }
+
+    @Test
+    void givenListObjectsContainDifferentTypeOfObjectThenThrowException() throws NoSuchMethodException {
+        SingleLevelContext context = new SingleLevelContext();
+        context.add("data", new TypeDescribableObject(Arrays.asList("Str"), new TypeReference<List<String>>() {
+        }));
+
+        PrioritizableMethodOrConstructorHolder method
+                = binder.bind(new MethodOrConstructor(ListMethod.class.getMethod("method", List.class)), context);
+        Assertions.assertThat(method).isNull();
+    }
+
+    @Test
+    void givenListObjectsContainDifferentTypeOfObjectButParameterizedThenThrowException() throws NoSuchMethodException {
+        SingleLevelContext context = new SingleLevelContext();
+
+        Map<String, Object> map = new HashMap<>();
+        context.add("data", new TypeDescribableObject(Arrays.asList(map),
+                new TypeReference<List<Map<String, Object>>>() {
+                }));
+
+        PrioritizableMethodOrConstructorHolder method
+                = binder.bind(new MethodOrConstructor(ListMethod.class.getMethod("listMapMethod", List.class)), context);
+        Assertions.assertThat(method).isNull();
+    }
+
+    @Test
+    void givenListObjectsContainSameTypeOfObjectButParameterizedThenBind() throws NoSuchMethodException {
+        SingleLevelContext context = new SingleLevelContext();
+
+        Map<Integer, Integer> map = new HashMap<>();
+        context.add("data", new TypeDescribableObject(Arrays.asList(map),
+                new TypeReference<List<Map<Integer, Integer>>>() {
+                }));
+
+        PrioritizableMethodOrConstructorHolder method
+                = binder.bind(new MethodOrConstructor(ListMethod.class.getMethod("listMapMethod", List.class)), context);
+        Assertions.assertThat(method).isNotNull();
+    }
+
+    static class ListMethod {
+        public String method(List<Integer> data) {
+            return data.toString();
+        }
+
+        public String listMapMethod(List<Map<Integer, Integer>> data) {
+            return data.toString();
+        }
     }
 
     static class ParameterQualifiedClass {

@@ -34,8 +34,21 @@ public class ParameterNameMethodArgumentBindingStrategy implements MethodArgumen
                 parameterAndArgumentHolder.accept(argCandidate);
                 log.debug("Parameter name binding of {}", parameterAndArgumentHolder.getParameterName());
                 return new ParameterBindingResult(parameterAndArgumentHolder, false);
+            } else if (parameterAndArgumentHolder.canAccept(argCandidate.getObject())) {
+                parameterAndArgumentHolder.accept(argCandidate);
+                log.debug("Parameter [{}] has bound.", parameterAndArgumentHolder.getParameterName());
+                return new ParameterBindingResult(parameterAndArgumentHolder, false);
+            } else {
+                log.debug("Parameter [{}] is skipped. (type mismatch). " +
+                                "Parameter type is [{}] but the object type is [{}]",
+                        parameterAndArgumentHolder.getParameterName(),
+                        parameterAndArgumentHolder.getParameterType(),
+                        argCandidate.getType());
+                return new ParameterBindingResult(null, true);
             }
+        } else {
+            log.debug("No parameter name [{}] in the context.", parameterAndArgumentHolder.getParameterName());
+            return new ParameterBindingResult(null, true);
         }
-        return new ParameterBindingResult(null, true);
     }
 }

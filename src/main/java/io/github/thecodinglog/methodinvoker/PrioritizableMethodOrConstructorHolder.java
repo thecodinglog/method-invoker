@@ -2,6 +2,7 @@ package io.github.thecodinglog.methodinvoker;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,9 +61,42 @@ final class PrioritizableMethodOrConstructorHolder implements Prioritizable {
      * @return actual arguments.
      */
     public Object[] args() {
-        return parameterAndArgumentHolders.stream()
-                .map(ParameterAndArgumentHolder::getActualArgument)
-                .toArray();
+        Object[] args = new Object[parameterAndArgumentHolders.size()];
+        for (int i = 0; i < parameterAndArgumentHolders.size(); i++) {
+            Object actualArgument = parameterAndArgumentHolders.get(i).getActualArgument();
+            if (actualArgument == null) {
+                if (parameterAndArgumentHolders.get(i).getParameterType() instanceof Class) {
+                    if (((Class<?>) parameterAndArgumentHolders.get(i).getParameterType()).isPrimitive()) {
+                        args[i] = defaultValueOfPrimitiveType(parameterAndArgumentHolders.get(i).getParameterType());
+                    }
+                }
+            } else {
+                args[i] = parameterAndArgumentHolders.get(i).getActualArgument();
+            }
+        }
+        return args;
+    }
+
+    private Object defaultValueOfPrimitiveType(Type parameterType) {
+        if (parameterType == byte.class) {
+            return (byte) 0;
+        } else if (parameterType == short.class) {
+            return (short) 0;
+        } else if (parameterType == int.class) {
+            return 0;
+        } else if (parameterType == long.class) {
+            return 0L;
+        } else if (parameterType == float.class) {
+            return 0.0f;
+        } else if (parameterType == double.class) {
+            return 0.0d;
+        } else if (parameterType == char.class) {
+            return '\u0000';
+        } else if (parameterType == boolean.class) {
+            return false;
+        } else {
+            return null;
+        }
     }
 
     @Override

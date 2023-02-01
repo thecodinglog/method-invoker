@@ -38,6 +38,8 @@ final class TypeMatchableMethodArgumentBinder implements MethodArgumentBinder {
                     new ParameterTypeMethodArgumentBindingStrategy());
             parameterQualifierBindingStrategies.add(
                     new ParameterNameAndJsonMethodArgumentBindingStrategy());
+            parameterQualifierBindingStrategies.add(
+                    new OptionalMethodArgumentBindingStrategy());
 
             for (MethodArgumentBindingStrategy strategy : parameterQualifierBindingStrategies) {
                 ParameterBindingResult parameterBindingResult

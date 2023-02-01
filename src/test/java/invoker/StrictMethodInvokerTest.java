@@ -125,6 +125,32 @@ class StrictMethodInvokerTest {
         assertThat(run.getObject()).isEqualTo("run");
     }
 
+    @Test
+    void givenOptionalParamListThenMatchWithoutTheList() {
+        OptionalContainsClass optionalContainsClass = new OptionalContainsClass();
+        SingleLevelContext context = new SingleLevelContext();
+        context.addOptionalParameter("age");
+        context.add("school", new TypeDescribableObject("school1"));
+
+        TypeDescribableObject retMyName = methodInvoker.invoke(optionalContainsClass, "myName", context);
+        assertThat(retMyName.getObject()).isEqualTo("school1");
+
+        TypeDescribableObject retSchoolAge = methodInvoker.invoke(optionalContainsClass, "schoolAge", context);
+        assertThat(retSchoolAge.getObject()).isEqualTo("school10");
+    }
+
+    @Test
+    void givenOptionalParamListAndFullMatchedParameterThenUseFullMatched() {
+        ParameterMethod parameterMethod = new ParameterMethod();
+        SingleLevelContext context = new SingleLevelContext();
+        context.addOptionalParameter("name");
+        context.add("school", new TypeDescribableObject("school1"));
+        context.add("name", new TypeDescribableObject("name1"));
+
+        TypeDescribableObject retMyName = methodInvoker.invoke(parameterMethod, "myName", context);
+        assertThat(retMyName.getObject()).isEqualTo("school1name1");
+    }
+
     static class Consumer {
         public String run(List<ConsumerDto> dto) {
             return "run";
@@ -199,6 +225,20 @@ class StrictMethodInvokerTest {
 
         public String myName(List<String> addresses) {
             return "myName";
+        }
+
+        public String myName(String school, String name) {
+            return school + name;
+        }
+    }
+
+    static class OptionalContainsClass {
+        public String myName(String school, Integer age) {
+            return school + (age == null ? "" : String.valueOf(age));
+        }
+
+        public String schoolAge(String school, int age) {
+            return school + age;
         }
     }
 }

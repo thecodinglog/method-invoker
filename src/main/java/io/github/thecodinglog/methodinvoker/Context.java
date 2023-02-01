@@ -3,8 +3,10 @@ package io.github.thecodinglog.methodinvoker;
 import io.github.thecodinglog.methodinvoker.exceptions.NoUniqueElementException;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * The central interface provides objects for an application.
@@ -77,4 +79,13 @@ public interface Context {
      * @param typeDescribableObject object to add
      */
     void add(String key, TypeDescribableObject typeDescribableObject);
+
+    /**
+     * Return optional parameter names.
+     *
+     * @return optional parameter names
+     */
+    default Set<String> optionalParameters() {
+        return Collections.EMPTY_SET;
+    }
 }

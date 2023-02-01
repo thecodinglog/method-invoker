@@ -13,6 +13,7 @@ import java.util.*;
  * @since 2021-03-25
  */
 public class SingleLevelContext implements Context {
+    private final Set<String> optionalParameters = new HashSet<>();
     private final Map<String, TypeDescribableObject> store = new HashMap<>();
 
     @Override
@@ -53,5 +54,18 @@ public class SingleLevelContext implements Context {
     @Override
     public void add(String key, TypeDescribableObject typeDescribableObject) {
         store.put(key, typeDescribableObject);
+    }
+
+    /**
+     * Add a key to the optional parameter set.
+     * @param key key
+     */
+    public void addOptionalParameter(String key) {
+        optionalParameters.add(key);
+    }
+
+    @Override
+    public Set<String> optionalParameters() {
+        return Collections.unmodifiableSet(optionalParameters);
     }
 }

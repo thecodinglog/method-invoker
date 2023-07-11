@@ -34,7 +34,8 @@ public class ParameterNameAndJsonMethodArgumentBindingStrategy implements Method
                 try {
                     paramObject = objectMapper.readValue(argCandidate.getObject(String.class)
                             , (Class<?>) parameterAndArgumentHolder.getParameterType());
-                } catch (JsonProcessingException e) {
+                } catch (JsonProcessingException | ClassCastException e) {
+                    log.debug(e.getMessage());
                     paramObject = null;
                 }
             }

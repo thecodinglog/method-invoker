@@ -42,6 +42,9 @@ final class TypeMatchableMethodArgumentBinder implements MethodArgumentBinder {
                     new OptionalMethodArgumentBindingStrategy());
 
             for (MethodArgumentBindingStrategy strategy : parameterQualifierBindingStrategies) {
+                log.info("Strategy [{}], Param name [{}], Param type [{}]", strategy.getClass().getSimpleName(),
+                        parameterAndArgumentHolder.getParameterName(),
+                        parameterAndArgumentHolder.getParameterType());
                 ParameterBindingResult parameterBindingResult
                         = strategy.tryBind(parameterAndArgumentHolder, context);
 

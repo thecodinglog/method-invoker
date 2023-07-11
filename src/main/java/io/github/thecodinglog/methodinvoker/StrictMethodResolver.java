@@ -37,10 +37,10 @@ final class StrictMethodResolver implements MethodResolver {
         List<PrioritizableMethodOrConstructorHolder> candidatesMethods = new ArrayList<>(methods.length);
 
         for (Method method : methods) {
+            log.info("Try binding for method. [{}]", method.toGenericString());
             if (beforeConstructorParameterLength > method.getParameters().length && candidatesMethods.size() > 0)
                 break;
 
-            log.debug("Try bind [{}]", method.toGenericString());
             PrioritizableMethodOrConstructorHolder holder =
                     methodArgumentBinder.bind(new MethodOrConstructor(method), context);
             if (holder != null)

@@ -17,6 +17,7 @@ import java.util.List;
  * @since 2021-02-23
  */
 final class StrictConstructorResolver implements ConstructorResolver {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StrictConstructorResolver.class);
     private final CandidateConstructorsSelector candidateResolver;
     private final MethodArgumentBinder methodArgumentBinder;
     private final PriorityPicker priorityPicker;
@@ -51,6 +52,7 @@ final class StrictConstructorResolver implements ConstructorResolver {
         List<PrioritizableMethodOrConstructorHolder> candidatesConstructors = new ArrayList<>(constructors.length);
 
         for (Constructor<?> constructor : constructors) {
+            log.info("Try binding for constructor. [{}]", constructor.toGenericString());
             if (beforeConstructorParameterLength > constructor.getParameters().length
                     && candidatesConstructors.size() > 0)
                 break;

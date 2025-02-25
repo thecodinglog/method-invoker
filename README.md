@@ -43,7 +43,7 @@ Which constructor and which method to use depends on the data in the context and
 <dependency>
   <groupId>io.github.thecodinglog</groupId>
   <artifactId>method-invoker</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.3</version>
 </dependency>
 ```
 

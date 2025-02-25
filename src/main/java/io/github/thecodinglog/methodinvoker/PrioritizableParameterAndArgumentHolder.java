@@ -33,6 +33,13 @@ final class PrioritizableParameterAndArgumentHolder implements ParameterAndArgum
     private ResolvableType resolvableType;
 
     public PrioritizableParameterAndArgumentHolder(MethodOrConstructorParameter methodParameter) {
+        if (methodParameter.getParameterName() == null) {
+            throw new IllegalArgumentException("ParameterName must not be null.\n" +
+                    "\n" +
+                    "Check compile option '-parameters' to get the parameter name.\n" +
+                    "See, https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-6.1-Release-Notes");
+        }
+
         this.methodOrConstructorParameter = methodParameter;
     }
 
